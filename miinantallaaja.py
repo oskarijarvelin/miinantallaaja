@@ -206,13 +206,13 @@ def lue_tilasto():
                     tulokset.append([aika, kesto, vumaara, lopputulos, kentan_koko, miinojen_maara]) #Lisää datan tulokset-listan alkioiksi
                 except ValueError:
                     print("Riviä ei saatu luettua: {}".format(rivi))
-            for i in range(0, (len(tulokset))): #Sihoittaa datan lukijaystävälliseen kontekstiin    
+            for i in range(0, (len(tulokset))): #Sijoittaa datan lukijaystävälliseen kontekstiin    
                 print("Pelattu: {}, kesto: {}min / {} vuoroa, {}, kentän koko: {} ja {} miinaa.". format(tulokset[i][0], tulokset[i][1], tulokset[i][2], tulokset[i][3], tulokset[i][4], tulokset[i][5]))
     except IOError:
         print("Tilastotiedoston avaaminen epäonnistui.")
    
-def main():
-    """Pyörittää peliä, kunnes miina räjähtää tai kaikki miinattomat ruudut ovat aukaistu."""
+def tarkista_voitto():
+    """Luo kentän, miinat ja tarkistaa voiton tai häviön"""
     kentta, miinoja = kysy_kentta()
     miinoittamatta = []
     miinat = []
@@ -233,11 +233,15 @@ def main():
         print(" ")
         print("***    VICTORY!    ***")
 
-while True:
-    valinta = paavalikko()
-    if valinta == "u":
-        main()
-    if valinta == "t":
-        lue_tilasto()
-    if valinta == "l":
-        break
+def main():
+    """Pyörittää peliä, kunnes miina räjähtää tai kaikki miinattomat ruudut ovat aukaistu."""        
+    while True:
+        valinta = paavalikko()
+        if valinta == "u":
+            tarkista_voitto()
+        if valinta == "t":
+            lue_tilasto()
+        if valinta == "l":
+            break
+
+main()
